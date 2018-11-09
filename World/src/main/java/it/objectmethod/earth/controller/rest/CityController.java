@@ -1,4 +1,4 @@
-package it.objectmethod.World.controller;
+package it.objectmethod.earth.controller.rest;
 
 import java.util.List;
 
@@ -9,13 +9,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import it.objectmethod.World.model.City;
-import it.objectmethod.World.repository.CityRepository;
+import it.objectmethod.earth.model.City;
+import it.objectmethod.earth.repository.CityRepository;
 
 @RestController
+@RequestMapping("/api")
 public class CityController {
 
 	private final CityRepository cityRepo;
