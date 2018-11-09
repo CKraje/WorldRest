@@ -28,7 +28,7 @@ public class CountryController {
 
 	}
 
-	@GetMapping("/countries/find-by-continent/{continent}")
+	@GetMapping("/countries/{continent}/find-by-continent")
 	public ResponseEntity<List<Country>>  getCountriesListByContinent(
 			@PathVariable("continent")String continent){
 

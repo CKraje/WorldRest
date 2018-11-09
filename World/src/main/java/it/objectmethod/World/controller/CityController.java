@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import it.objectmethod.World.model.City;
@@ -24,17 +25,18 @@ public class CityController {
 	}
 
 
-	@GetMapping("/cities/find-by-id/{id}")
+	@GetMapping("/cities/{id}/find-by-id")
 	public ResponseEntity<City> getCityById(@PathVariable("id") Integer id){
 
 		City city = cityRepo.findOne(id);
 		if(city != null) {
 			return new ResponseEntity<City>(city, HttpStatus.OK);
 		}
-		return new ResponseEntity<City>( HttpStatus.NOT_FOUND);	}
+		return new ResponseEntity<City>( HttpStatus.NOT_FOUND);	
+	}
 
 
-	@GetMapping("/cities/find-by-code/{countryCode}")
+	@GetMapping("/cities/{countryCode}/find-by-code")
 	public ResponseEntity<List<City>> citiesList(@PathVariable("countryCode") String code) {
 
 		List<City> citiesList = cityRepo.findByCode(code);
@@ -45,36 +47,15 @@ public class CityController {
 	}
 
 	@PostMapping("/cities/insert_modify")
-	public ResponseEntity<?> insertOrUpdateCity (@RequestBody City city) {
-
-		City cityById = cityRepo.findOne(city.getId());
-		boolean statusUpdated= false;
-		if(cityById != null) {
-			statusUpdated=true;
-		}
-		City cityNew = new City();
-		cityNew.setName(city.getName());
-		cityNew.setCode(city.getCode());  
-		cityNew.setPopulation(city.getPopulation());
-		cityNew.setDistrict(city.getDistrict());
-		cityNew.setId(city.getId());
-		cityNew = cityRepo.save(cityNew);
-
-		if(statusUpdated) {
-			return  new ResponseEntity<>(HttpStatus.NO_CONTENT);
-		}
-		return  new ResponseEntity<>(HttpStatus.CREATED);
-
+	public City insertOrUpdateCity (@RequestBody City city) {
+		city = cityRepo.save(city);
+		return  city;
 	}
 
-	@GetMapping("/cities/search/find-by-name/{name}")
-	public ResponseEntity<List<City>> searchCity(@PathVariable("name") String name) {
-
-		List<City> citiesListByName = cityRepo.findByNameStartingWithOrderByNameAsc(name);
-		if(citiesListByName.size()>0) {
-			return new ResponseEntity<>(citiesListByName,HttpStatus.OK);
-		}
-		return new ResponseEntity<>(HttpStatus.NOT_FOUND);	
+	@PostMapping("/cities/search")
+	public ResponseEntity<List<City>> searchCity(@RequestParam("param") String param) {
+		List<City> citiesListByName = cityRepo.findByNameStartingWithOrderByNameAsc(param);
+		return new ResponseEntity<>(citiesListByName,HttpStatus.OK);
 	}
 
 	@DeleteMapping("cities/delete/{id}") 
