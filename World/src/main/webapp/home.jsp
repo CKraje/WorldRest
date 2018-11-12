@@ -11,13 +11,10 @@
 <script type="text/javascript" src="/js/continentFunctions.js"></script>
 </head>
 <body>
-
-	<button class="btn btn-outline-primary" onclick="getContinents()" id="continentButton">Continents</button>
-	<button class="btn btn-outline-danger">PICCOLO!</button>
-	<div  align="center" id ="countries-content">
-
-	</div>
-	<div align="center" id="continents-content"> </div>
-
+	<button id="boh" onclick="alert('CIAO!')">CIAO!</button>
+	<div align="center" id="main-content"></div>
 </body>
+<script type="text/javascript">
+	getContinents()
+</script>
 </html>
