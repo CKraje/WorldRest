@@ -99,8 +99,6 @@ function fillCityForm(city){
 	document.getElementById("cityPopulationOfForm").value=city.population;
 	var modifyCityButton = document.getElementById("modificaCityButton");
 	modifyCityButton.innerHTML ="modifica";
-	var listCountryCode = document.getElementById("countriesList");
-//	getCountriesToForm(city.code);
 }
 
 function formCity(idCity){
@@ -146,7 +144,7 @@ function saveCity(){
 			if(city.id != 0){
 			document.getElementById("updateMessage").innerHTML = "Modifica Avvenuta con Successo !"
 			}
-			updateMessage.setAttribute("style","display: block;");
+			document.getElementById("updateMessage").setAttribute("style","display: block;");
 			fillCityForm(cityUploaded);
 		}
 	};
@@ -158,7 +156,7 @@ function saveCity(){
 }
 
 function formToCreate(){
-	 setVisibility(true,false,false); in bug fixing
+	 setVisibility(true,false,false);
 	clearCountriesOptionsSelect();
 	getCountriesToForm("");
 	document.getElementById("cityId").value=0;
