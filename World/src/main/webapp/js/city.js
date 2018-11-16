@@ -87,7 +87,6 @@ function displayCities(cities,continent){
 		content.appendChild(buttonBack);
 	}
 	else{
-//		setVisibility(false,true, false);
 		setVisibility(false,true, true);
 	}
 	getCountriesToForm(cityCode);
@@ -99,8 +98,9 @@ function fillCityForm(city){
 	document.getElementById("cityDistrictOfForm").value=city.district;
 	document.getElementById("cityPopulationOfForm").value=city.population;
 	var modifyCityButton = document.getElementById("modificaCityButton");
+	modifyCityButton.innerHTML ="modifica";
 	var listCountryCode = document.getElementById("countriesList");
-	getCountriesToForm(city.code);
+//	getCountriesToForm(city.code);
 }
 
 function formCity(idCity){
@@ -119,6 +119,7 @@ function searchCities(){
 			var citiesByName = JSON.parse(this.responseText);
 			displayCities(citiesByName,null);
 			console.log("ARRIVATA RISPOSTA!");
+			setVisibility(false,true,false);  
 		}
 	};
 	xmlhttp.open("POST", url, true);
@@ -142,7 +143,9 @@ function saveCity(){
 		if (this.readyState == 4 && this.status == 200 ) {
 			console.log("ARRIVATA RISPOSTA , UPLOAD!");
 			var cityUploaded = JSON.parse(this.responseText);
-			var updateMessage = document.getElementById("updateMessage");
+			if(city.id != 0){
+			document.getElementById("updateMessage").innerHTML = "Modifica Avvenuta con Successo !"
+			}
 			updateMessage.setAttribute("style","display: block;");
 			fillCityForm(cityUploaded);
 		}
@@ -152,4 +155,17 @@ function saveCity(){
 	var data = JSON.stringify(city);
 	xmlhttp.send(data);
 	console.log("CHIAMATA INVIATA");
+}
+
+function formToCreate(){
+	 setVisibility(true,false,false); in bug fixing
+	clearCountriesOptionsSelect();
+	getCountriesToForm("");
+	document.getElementById("cityId").value=0;
+	document.getElementById("cityNameOfForm").value = "";
+	document.getElementById("cityDistrictOfForm").value="";
+	document.getElementById("cityPopulationOfForm").value="";
+	document.getElementById("modificaCityButton").innerHTML ="crea";
+	document.getElementById("updateMessage").innerHTML = "Creazione avvenuta!"
+	document.getElementById("updateMessage").setAttribute("style","display: none;");	
 }

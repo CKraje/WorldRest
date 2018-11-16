@@ -121,3 +121,12 @@ function displayContinents(continents){
 	content.innerHTML = '';
 	content.appendChild(table);
 }
+
+function clearCountriesOptionsSelect(){
+	var selectCountries= document.getElementById('countriesList');
+	var i;
+	for(i=0;i<selectCountries.length;i++){
+		var option = selectCountries[i];
+		selectCountries.remove(option);
+	}
+}

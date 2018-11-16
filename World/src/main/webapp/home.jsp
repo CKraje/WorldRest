@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Insert title here</title>
 <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
-<script src="/bootstrap/js/bootstrap.min.js"></script>
+<!--  <script src="/bootstrap/js/bootstrap.min.js"></script>-->
 <link rel="stylesheet" type="text/css" href="/css/style.css">
 <script type="text/javascript" src="/js/countries-continent.js"></script>
 <script type="text/javascript" src="/js/city.js"></script>
@@ -18,6 +18,7 @@
 		style="width: 250px;">
 		<input type="button" onclick="searchCities()" class="btn btn-secondary" value="Cerca Citta"
 		id="searchCityButton" >
+		<input type="button" class="btn btn-secondary" value="Crea Citta" onclick="formToCreate()">
 	<form id="formToInsertUpdate" style="display: none;" >
 		<table>
 			<tbody>
@@ -38,8 +39,8 @@
 						id="cityPopulationOfForm" placeholder="popolazione citta"
 						class="form-control"></td>
 						<td><button id="modificaCityButton"class="btn btn-secondary"
-						onclick="saveCity()">modifica</button></td>
-						<td> <p id="updateMessage"style="display: none">Modifica Avvenuta con Successo !!</p></td>
+						onclick="saveCity()"></button></td>
+						<td> <p id="updateMessage"style="display: none">Modifica Avvenuta con Successo !</p></td>
 				</tr>
 			</tbody>
 		</table>
@@ -50,6 +51,8 @@
 			value="Torna ai continenti" onclick="getContinents()"
 			id="buttonContinenti">
 	</div>
+	
+	<script src="/bootstrap/js/bootstrap.min.js"></script>
 </body>
 <script type="text/javascript" >getContinents()</script>
 </html>
