@@ -34,11 +34,28 @@ public class CountryController {
 	public ResponseEntity<List<Country>>  getCountriesListByContinent(
 			@PathVariable("continent")String continent){
 
-		List<Country> countriesListByCode = countryRepo.findByContinent(continent);
+		List<Country> countriesListByContinent = countryRepo.findByContinent(continent);
+		if(countriesListByContinent.size()>0) {
+			return new ResponseEntity<>(countriesListByContinent, HttpStatus.OK);
+		}
+		return new ResponseEntity<>(countriesListByContinent, HttpStatus.NOT_FOUND);
+
+	}	
+
+	@GetMapping("/countries/{code}/find-by-code")
+	public ResponseEntity<List<Country>>  getCountriesListByCode(
+			@PathVariable("code")String code){
+
+		List<Country> countriesListByCode = countryRepo.findByCode(code);
 		if(countriesListByCode.size()>0) {
 			return new ResponseEntity<>(countriesListByCode, HttpStatus.OK);
 		}
 		return new ResponseEntity<>(countriesListByCode, HttpStatus.NOT_FOUND);
+	}
 
-	}	
+	@GetMapping("/countries")
+	public List<Country> getAllCountries(){
+		List<Country> countriesList = countryRepo.findAll();
+		return countriesList;
+	}
 }
