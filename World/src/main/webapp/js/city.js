@@ -50,23 +50,26 @@ function displayCities(cities,continent){
 	var i;
 	for(i = 0; i < cities.length; i++) {
 		row = table.insertRow();
-		var buttonCityName = document.createElement("BUTTON");
-		var buttonCityDistrict = document.createElement("BUTTON");
-		var buttonCityPopulation = document.createElement("BUTTON");
+//		var buttonCityName = document.createElement("BUTTON");
+//		var buttonCityDistrict = document.createElement("BUTTON");
+//		var buttonCityPopulation = document.createElement("BUTTON");
 		var buttonModificaCity = document.createElement("BUTTON");
 		buttonModificaCity.setAttribute('class','btn btn-link')
-		buttonCityName.setAttribute('class','btn btn-link');
-		buttonCityDistrict.setAttribute('class','btn btn-link');
-		buttonCityPopulation.setAttribute('class','btn btn-link');
-		buttonCityName.innerHTML=cities[i].name;
+//		buttonCityName.setAttribute('class','btn btn-link');
+//		buttonCityDistrict.setAttribute('class','btn btn-link');
+//		buttonCityPopulation.setAttribute('class','btn btn-link');
+//		buttonCityName.innerHTML=cities[i].name;
 		var tdCityName = row.insertCell();
-		tdCityName.appendChild(buttonCityName);
+		tdCityName.innerHTML=cities[i].name;
+		//tdCityName.appendChild(buttonCityName);
 		var tdCityDistrict = row.insertCell();
-		buttonCityDistrict.innerHTML=cities[i].district;
-		tdCityDistrict.appendChild(buttonCityDistrict);
+		//buttonCityDistrict.innerHTML=cities[i].district;
+		tdCityDistrict.innerHTML=cities[i].district;
+		//tdCityDistrict.appendChild(buttonCityDistrict);
 		var tdCityPopulation = row.insertCell();
-		buttonCityPopulation.innerHTML=cities[i].population;
-		tdCityPopulation.appendChild(buttonCityPopulation);
+		//buttonCityPopulation.innerHTML=cities[i].population;
+		//tdCityPopulation.appendChild(buttonCityPopulation);
+		tdCityPopulation.innerHTML=cities[i].population;
 		var tdModificaCity = row.insertCell();
 		buttonModificaCity.innerHTML="Modifica";
 		buttonModificaCity.setAttribute("onclick","formCity("+cities[i].id+")");
