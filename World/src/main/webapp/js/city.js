@@ -29,62 +29,53 @@ function getCityById(id) {
 }
 
 function displayCities(cities, continent) {
-	var table = document.createElement('TABLE');
-	table.setAttribute('class', 'table table-bordered');
-	table.setAttribute("style", "width: 400px; margin-top: 25px;");
-	var rowThead = table.insertRow();
-	var thCityName = document.createElement('th');
-	thCityName.innerHTML = "Name";
-	var thCityDistrict = document.createElement('th');
-	thCityDistrict.innerHTML = "District";
-	var thCityPopulation = document.createElement('th');
-	thCityPopulation.innerHTML = "Population";
-	var thModificaCity = document.createElement('th');
-	thModificaCity.innerHTML = "Modifica";
-	rowThead.appendChild(thCityName);
-	rowThead.appendChild(thCityDistrict);
-	rowThead.appendChild(thCityPopulation);
-	rowThead.appendChild(thModificaCity);
-	buttonModificaCity
-	var cityCode = "";
+	var divRow = document.createElement('div');
+	divRow.setAttribute("class","row mt-2");
+	var cityCode="";
 	var i;
-	for (i = 0; i < cities.length; i++) {
-		row = table.insertRow();
-		var buttonCityName = document.createElement("BUTTON");
-		var buttonCityDistrict = document.createElement("BUTTON");
-		var buttonCityPopulation = document.createElement("BUTTON");
-		var buttonModificaCity = document.createElement("BUTTON");
-		buttonModificaCity.setAttribute('class', 'btn btn-link')
-		buttonCityName.setAttribute('class', 'btn btn-link');
-		buttonCityDistrict.setAttribute('class', 'btn btn-link');
-		buttonCityPopulation.setAttribute('class', 'btn btn-link');
-		buttonCityName.innerHTML = cities[i].name;
-		var tdCityName = row.insertCell();
-		tdCityName.appendChild(buttonCityName);
-		var tdCityDistrict = row.insertCell();
-		buttonCityDistrict.innerHTML = cities[i].district;
-		tdCityDistrict.appendChild(buttonCityDistrict);
-		var tdCityPopulation = row.insertCell();
-		buttonCityPopulation.innerHTML = cities[i].population;
-		tdCityPopulation.appendChild(buttonCityPopulation);
-		var tdModificaCity = row.insertCell();
-		buttonModificaCity.innerHTML = "Modifica";
-		buttonModificaCity.setAttribute("onclick", "formCity(" + cities[i].id + ")");
-		tdModificaCity.appendChild(buttonModificaCity);
-		cityCode = cities[i].code;
-	}
+	for(i = 0; i < cities.length; i++) {
+		var card = document.createElement("card");
+		card.setAttribute("style","border:1px solid rgba(0,0,0,.125)")
+		card.setAttribute("class","card col-md-2");
+		var cardHeader = document.createElement("div");
+		cardHeader.setAttribute("class","card-header")
+		cardHeader.innerHTML= cities[i].name;
+		card.appendChild(cardHeader);
+		var cardBody= document.createElement("div");
+		cardBody.setAttribute("class","card-body")
+		var p = document.createElement("p");
+		text = "District :<br>"+cities[i].district+"</br>"+"Population :</br>"
+		+cities[i].population;
+		p.innerHTML= text; 
+		cardBody.appendChild(p);
+		card.appendChild(cardBody);
+		var cardFooter = document.createElement("footer");
+		var buttonModify = document.createElement("BUTTON");
+		buttonModify.setAttribute('class','list-group-item');
+		buttonModify.innerHTML="Modify";
+		buttonModify.setAttribute("onclick", "formCity(" + cities[i].id + ")");
+		cardFooter.appendChild(buttonModify);
+		card.appendChild(cardFooter);
+		cityCode=cities[i].code;	
+		divRow.appendChild(card);
+	}	
 	var content = document.getElementById("main-content");
 	content.innerHTML = '';
-	content.appendChild(table);
+	content.appendChild(divRow);
+	
 	if (!(continent == null)) {
+		var divButtonBack= document.createElement('div');
+		divButtonBack.setAttribute("id","divBack");
+		divButtonBack.setAttribute("class","mt-3");
 		var buttonBack = document.createElement('BUTTON');
 		buttonBack.setAttribute("onclick", "getCountries('" + continent + "')");
 		buttonBack.innerHTML = 'Back';
 		buttonBack.setAttribute("id", "backToCountries");
 		buttonBack.setAttribute("class", "btn btn-secondary");
 		buttonBack.setAttribute("id", "backToCountries");
-		setVisibility(true, true, false);
-		content.appendChild(buttonBack);
+		divButtonBack.appendChild(buttonBack);
+		setVisibility(false, true, false);
+		content.appendChild(divButtonBack);
 	}
 	else {
 		setVisibility(false, true, true);
@@ -100,12 +91,13 @@ function fillCityForm(city) {
 }
 
 function formCity(idCity) {
-	setVisibility(true, false, false);
-	getCityById(idCity, true, false);
+	getCityById(idCity);
+	document.getElementById("modificaCityButton").innerHTML="Save";
 	document.getElementById("modificaCityButton").addEventListener("click", function(event) {
 		event.preventDefault();
 		saveCity();
 	});
+	setVisibility(false, false,false,true);
 }
 
 
@@ -119,7 +111,7 @@ function searchCities() {
 			var citiesByName = JSON.parse(this.responseText);
 			displayCities(citiesByName, null);
 			console.log("ARRIVATA RISPOSTA!");
-			setVisibility(false, true, false);
+			setVisibility(false, true, false,true);
 		}
 	};
 	xmlhttp.open("POST", url, true);
@@ -142,9 +134,6 @@ function saveCity() {
 	xmlhttp.onreadystatechange = function () {
 		if (this.readyState == 4 && this.status == 200) {
 			var cityUploaded = JSON.parse(this.responseText);
-			if (city.id != 0) {
-				document.getElementById("updateMessage").innerHTML = "Modifica Avvenuta con Successo !"
-			}
 			document.getElementById("updateMessage").setAttribute("style", "display: block;");
 			fillCityForm(cityUploaded);
 		}
@@ -156,15 +145,21 @@ function saveCity() {
 }
 
 function formToCreate() {
-	setVisibility(true, false, false);
+	if(document.getElementById("buttonContinenti").style.display === 'none'){
+		setVisibility(true, false);
+	}
+	else{
+		setVisibility(false, false);
+	}
 	clearCountriesOptionsSelect();
 	getCountriesToForm("");
 	document.getElementById("cityId").value = 0;
 	document.getElementById("cityNameOfForm").value = "";
 	document.getElementById("cityDistrictOfForm").value = "";
 	document.getElementById("cityPopulationOfForm").value = "";
-	document.getElementById("modificaCityButton").innerHTML = "crea";
-	document.getElementById("updateMessage").innerHTML = "Creazione avvenuta!"
+	document.getElementById("modificaCityButton").innerHTML = "create";
 	document.getElementById("updateMessage").setAttribute("style", "display: none;");
+	document.getElementById("modificaCityButton").setAttribute("onclick","saveCity()");
+	
 }
 
