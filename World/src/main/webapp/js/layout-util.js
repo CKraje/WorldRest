@@ -1,27 +1,24 @@
 function setVisibility(nascondiContinentsButton,nascondiFormUpdateCity, eliminaTastoBack,nascondiUpdateMessage){
-	var buttonContinent=document.getElementById("buttonContinenti");
-	var updateMessage = document.getElementById("updateMessage");
-	var formCity = document.getElementById('formToInsertUpdate');
 
 	if(! nascondiContinentsButton){
-		buttonContinent.setAttribute("style","display: block;");
+		$("#back-to-continents").attr("style","display: block");
 	}
 	if(nascondiContinentsButton ){
-		buttonContinent.setAttribute("style","display: none;");
+		$("#back-to-continents").attr("style","display: none");
 	}
-	if(! nascondiFormUpdateCity){
-		formCity.setAttribute("style","display: block;");
+	if( nascondiFormUpdateCity == false){
+		$("#formToInsertUpdate").attr("style","display: block");
 	}
-	if( nascondiFormUpdateCity){
-		formCity.setAttribute("style","display: none;");
+	if( nascondiFormUpdateCity ){
+		$("#formToInsertUpdate").attr("style","display: none");
 	}
-	if(eliminaTastoBack && document.getElementById("backToCountries") != null){
-		document.getElementById("divBack").remove();
+	if(eliminaTastoBack){
+		$("#back-to-countries").attr("style","display: none");
 	}
 	if(nascondiUpdateMessage){
-		updateMessage.setAttribute("style","display: none;");
+		$("#alert-message").attr("style","display: none");
 	}
-	if(! nascondiUpdateMessage){
-		updateMessage.setAttribute("style","display: block;");
+	if( nascondiUpdateMessage ==false){
+		$("#alert-message").attr("style","display: block");
 	}
 }

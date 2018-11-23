@@ -5,36 +5,53 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Insert title here</title>
 <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+<script type="text/javascript" src="/jquery/jquery-3.3.1.min.js"></script>
 <script src="/bootstrap/js/bootstrap.min.js"></script>
 <link rel="stylesheet" type="text/css" href="/css/style.css">
 <script type="text/javascript" src="/js/countries-continent.js"></script>
 <script type="text/javascript" src="/js/city.js"></script>
 <script type="text/javascript" src="/js/layout-util.js"></script>
+<script type="text/javascript" src="/js/initializer.js"></script>
 </head>
 <body>
 
 	<div class="container">
 		<div class="row mt-2">
 			<div class="col-md-4 offset-md-3 mt-1">
-				<input type="text" id="cityName" placeholder="city's name"
-					class="form-control">
+				<nav class="navbar navbar-expand-lg navbar-light "
+					style="width: 600px;">
+					<div class="collapse navbar-collapse">
+						<button class="navbar-brand btn btn-secondary"
+							onclick="getContinents()" style="display: none"
+							id="back-to-continents">Home</button>
+						<button class="navbar-brand btn btn-secondary"
+							onclick="getContinents()" style="display: none"
+							id="back-to-countries">Back</button>
+						<form class="form-inline my-2 my-lg-0">
+							<div class="form-group">
+								<input id="cityName" class="form-control mr-sm-2" type="search"
+									placeholder="Search" aria-label="Search">
+							</div>
+							<div class="form-group ">
+								<button class="btn btn-outline-success my-2 my-sm-0 "
+									id="searchButton">Search</button>
+							</div>
+							<div class="form-group m-1">
+								<button id="create-city-button" class="btn btn-secondary">New</button>
+							</div>
+						</form>
+					</div>
+				</nav>
 			</div>
-			<div class="col-md-2 col-6 mt-1">
-				<button onclick="searchCities()" class="btn btn-secondary w-100"
-					id="searchCityButton">Search City</button>
-			</div>
-			<div class="col-md-2 col-6 mt-1">
-				<button class="btn btn-secondary w-100" onclick="formToCreate()">New
-					City</button>
-			</div>
+
 		</div>
 		<div class="row">
 			<div class="col-md-12">
 				<p></p>
 			</div>
 		</div>
-		
-		
+
+
 		<div id="formToInsertUpdate" style="display: none;">
 			<input type="hidden" id="cityId" value="0">
 			<div class="row">
@@ -62,11 +79,20 @@
 						placeholder="city's population" class="form-control">
 				</div>
 				<div class="col-md-1">
-					<button id="modificaCityButton" class="btn btn-secondary">Save</button>
+					<button id="modificaCityButton" class="btn btn-secondary"
+						onclick="saveCity()">Save</button>
 				</div>
-				<div class="row">
-					<div class="col-md-2 offset-md-5">
-						<p id="updateMessage" style="display: none">City Saved !</p>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<p></p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-3 offset-md-4" style="margin-left: 425px;">
+					<div id="alert-message" class="alert alert-primary text-center"
+						role="alert">
+						<b>City Saved !</b>
 					</div>
 				</div>
 			</div>
@@ -79,14 +105,6 @@
 
 
 		<div align="center" id="main-content"></div>
-		<div align="center" class="mt-1">
-			<input type="button" style="display: none" class="btn btn-secondary"
-				value="Back to Continents" onclick="getContinents()"
-				id="buttonContinenti">
-		</div>
 	</div>
 </body>
-<script type="text/javascript">
-	getContinents()
-</script>
 </html>

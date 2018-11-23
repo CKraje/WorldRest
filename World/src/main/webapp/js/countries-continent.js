@@ -1,16 +1,9 @@
 function getCountries(continent) {
-	var xmlhttp = new XMLHttpRequest();
 	var url = "/api/countries/"+continent+"/find-by-continent";
-	xmlhttp.onreadystatechange = function() {
-		if (this.readyState == 4 && this.status == 200) {
-			console.log("ARRIVATA RISPOSTA!");
-			var countries = JSON.parse(this.responseText);
-			displayCountries(countries,continent);
-		}
-	};
-	xmlhttp.open("GET", url, true);
-	xmlhttp.send();
-	console.log("CHIAMATA INVIATA");
+	$.get(url, function(countries){
+		setVisibility(true,true);
+		displayCountries(countries,continent);
+	});
 }
 
 function getCountriesByCode(code){
@@ -56,94 +49,57 @@ function getCountriesToForm(code){
 }
 
 function displayCountries(countries,continent) {
-	var div = document.createElement('div');
-	div.setAttribute('class','list-group');
-	div.setAttribute("style","padding-left:350px; padding-right:350px")
-	var divRow = document.createElement('div');
-	divRow.setAttribute("class", "row");
-	var divIntoRow = document.createElement('div');
-	divIntoRow.setAttribute("class", "col-md-4 offset-md-4");
-	var title = document.createElement('p');
-	var text = document.createTextNode("Countries");
-	var bold = document.createElement('b');
-	bold.appendChild(text);
-	title.appendChild(bold);
-	var divRowSpazio = document.createElement('div');
-	divRowSpazio.setAttribute("class", "row");
-	var spazio =  document.createElement('p');
-	divRowSpazio.innerHTML=spazio;
-	divIntoRow.appendChild(title);
-	divRow.appendChild(divIntoRow);	
-	div.appendChild(divRow);
+	$("#main-content").html("").append('<div id="continents-div" class="list-group"'+
+	'style="padding-left:350px; padding-right:350px"></div>');
+	$("#continents-div").append('<div id="divRow" class="row"></div>');
+	$("#divRow").append('<div id="divIntoRow" class="col-md-4 offset-md-4"></div>');
+
+	var bold = $('<b></b>').text("Continents");
+	var title= $('<p></p>').attr("id","titolo").append(bold);
 	var i;
 	for(i = 0; i < countries.length; i++) {
-		var button = document.createElement("BUTTON");
-		button.setAttribute('class','list-group-item list-group-item-action');
-		button.innerHTML=countries[i].name;
-		button.setAttribute('onclick', "getCities('"+countries[i].code+"','"+continent+"')");
-		div.appendChild(button);
+		var button = $('<button></button>').attr({"class": "list-group-item list-group-item-action",
+			"onclick": "getCities('"+countries[i].code+"','"+continent+"')"
+		}).text(countries[i].name);	
+		$("#continents-div").append(button);
 	}
-	setVisibility(false,true,false,true);	
-	var content = document.getElementById("main-content");
-	content.innerHTML = '';
-	content.appendChild(div);
+	setVisibility(false,true,false,false);	
 }
 
 function getContinents() {
-	var xmlhttp = new XMLHttpRequest();
 	var url = "/api/continents";
-	xmlhttp.onreadystatechange = function() {
-		if (this.readyState == 4 && this.status == 200) {
-			console.log("ARRIVATA RISPOSTA!");
-			var continents = JSON.parse(this.responseText);
-			setVisibility(true,true);
-			displayContinents(continents);
-		}
-	};
-	xmlhttp.open("GET", url, true);
-	xmlhttp.send();
-	console.log("CHIAMATA INVIATA");
+	$.get(url, function(continents){
+		setVisibility(true,true);
+		displayContinents(continents);
+	});
 }
 
-
 function displayContinents(continents){
-	var div = document.createElement('div');
-	div.setAttribute('class','list-group');
-	div.setAttribute("style","padding-left:350px; padding-right:350px")
-	var divRow = document.createElement('div');
-	divRow.setAttribute("class", "row");
-	var divIntoRow = document.createElement('div');
-	divIntoRow.setAttribute("class", "col-md-4 offset-md-4");
-	var title = document.createElement('p');
-	var text = document.createTextNode("Continents");
-	var bold = document.createElement('b');
-	bold.appendChild(text);
-	title.appendChild(bold);
-	var divRowSpazio = document.createElement('div');
-	divRowSpazio.setAttribute("class", "row");
-	var spazio =  document.createElement('p');
-	divRowSpazio.innerHTML=spazio;
-	divIntoRow.appendChild(title);
-	divRow.appendChild(divIntoRow);
-	div.appendChild(divRow);
+
+	$("#main-content").html("").append('<div id="continents-div" class="list-group"'+ 
+	'style="padding-left:350px; padding-right:350px"></div>');
+	$("#continents-div").append('<div id="divRow" class="row"></div>');
+	$("#divRow").append('<div id="divIntoRow" class="col-md-4 offset-md-4"></div>');
+
+	var bold = $('<b></b>').text("Continents");
+	var title= $('<p></p>').attr("id","titolo").append(bold);
+
+	$("#divIntoRow").append(title);
 	var i;
 	for(i = 0; i < continents.length; i++) {
-		var button = document.createElement("BUTTON");
-		button.setAttribute('class','list-group-item list-group-item-action');
-		button.innerHTML=continents[i];
-		button.setAttribute('onclick', "getCountries('"+continents[i]+"')");
-		div.appendChild(button);		
+		var button = $('<button></button>').attr({"class": "list-group-item list-group-item-action",
+			"onclick": "getCountries('"+continents[i]+"')",
+			"id": continents[i]
+		}).text(continents[i]);	
+		$("#continents-div").append(button);
 	}
-	setVisibility(true,true, true,true)
-	var content = document.getElementById("main-content");
-	content.innerHTML = '';
-	content.appendChild(div);
+	setVisibility(true,true,true,true);
 }
 
 function clearCountriesOptionsSelect(){
-	var selectCountries= document.getElementById('countriesList');
+//	var selectCountries= document.getElementById('countriesList');
 	var i;
-	for(i=0;i<selectCountries.length;i++){
+	for(i=0;i<$("#countriesList").length;i++){
 		var option = selectCountries[i];
 		selectCountries.remove(option);
 	}
