@@ -7,7 +7,6 @@ function getCountries(continent) {
 }
 
 function getCountriesByCode(code){
-	var xmlhttp = new XMLHttpRequest();
 	var url = "/api/countries/"+code+"/find-by-code";
 	$.get(url,function(countries){
 		console.log("ALL COUNTRIES WITH SAME CODE'S RESPONSE !");
@@ -17,11 +16,8 @@ function getCountriesByCode(code){
 }
 
 function getCountriesToForm(code){
-	var xmlhttp = new XMLHttpRequest();
 	var url = "/api/countries/";
 	$.get(url,function(countries){
-		console.log("ALL COUNTRIES'S RESPONSE !");
-		console.log(countries);
 		if($("#countriesList option").length >0){
 			clearCountriesOptionsSelect();
 		}

@@ -10,15 +10,16 @@ $(document).ready(function() {
 	$("#create-city-button").click(function() {
 		event.preventDefault();
 		formToCreate();
-		$(this).on('click', function() {
-				if ($("#formToInsertUpdate").is(':visible')) {
-					if($("#alert-message").is('visible')){
+		$("#create-city-button").text("close");
+		$(this).click( function() {
+				if ($("#formToInsertUpdate").css('display')==='block') {
+					
 						$("#formToInsertUpdate").hide();
-					}
-					//$("#formToInsertUpdate").hide();
+						$("#create-city-button").text("New");
 				} 
 				else {
 					$("#formToInsertUpdate").show();
+					$("#create-city-button").text("close");
 				}		
 		});
 	});
