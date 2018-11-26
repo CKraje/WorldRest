@@ -6,18 +6,12 @@ function getCities(countryCode, continent) {
 }
 
 function getCityById(id) {
-	var xmlhttp = new XMLHttpRequest();
 	var url = "/api/cities/" + id + "/find-by-id";
-	xmlhttp.onreadystatechange = function () {
-		if (this.readyState == 4 && this.status == 200) {
-			var city = JSON.parse(this.responseText);
-			console.log("ARRIVATA RISPOSTA!");
-			fillCityForm(city);
-		}
-	};
-	xmlhttp.open("GET", url, true);
-	xmlhttp.send();
-	console.log("CHIAMATA INVIATA");
+	$.get(url, function (city){
+		console.log("ARRIVATA RISPOSTA!");
+		$("#countriesList option[value='"+city.code+"']").attr("selected",true);
+		fillCityForm(city);
+	});
 }
 
 function displayCities(cities, continent) {
@@ -67,22 +61,13 @@ function formCity(idCity) {
 
 
 function searchCities() {
-	var citynameTextBox = document.getElementById("cityName");
-	var cityName = citynameTextBox.value;
-	var xmlhttp = new XMLHttpRequest();
+	var cityName = $("#cityName").val();
 	var url = "/api/cities/search";
-	xmlhttp.onreadystatechange = function () {
-		if (this.readyState == 4 && this.status == 200) {
-			var citiesByName = JSON.parse(this.responseText);
-			displayCities(citiesByName, null);
-			console.log("ARRIVATA RISPOSTA!");
-			setVisibility(false, true, false,true);
-		}
-	};
-	xmlhttp.open("POST", url, true);
-	xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-	xmlhttp.send("param=" + cityName);
-	console.log("CHIAMATA INVIATA");
+	$.post(url, {param: cityName},function(citiesByName){
+		displayCities(citiesByName, null);
+		console.log("ARRIVATA RISPOSTA!");
+		setVisibility(false, true, false,true);
+	});
 }
 
 function saveCity() {
@@ -91,25 +76,23 @@ function saveCity() {
 	city.name =$("#cityNameOfForm").val();
 	city.district =$("#cityDistrictOfForm").val();
 	city.population =$("#cityPopulationOfForm").val();
-	var listCountryCode = document.getElementById("countriesList");
-	city.code = listCountryCode.options[listCountryCode.selectedIndex].value;
+	city.code = $("#countriesList option:selected").val();
 	console.log(city);
-	var xmlhttp = new XMLHttpRequest();
 	var url = "/api/cities/insert_modify";
-	xmlhttp.onreadystatechange = function () {
-		if (this.readyState == 4 && this.status == 200) {
-			var cityUploaded = JSON.parse(this.responseText);
+	$.ajax({
+		type: 'POST',
+		url: url,
+		data: JSON.stringify(city),
+		contentType: 'application/json',
+		dataType: 'json',
+		success: function(cityUploaded){
 			fillCityForm(cityUploaded);
 			$("#"+cityUploaded.id).html("District :</br>"+cityUploaded.district+"</br> Population : </br>"+
 					cityUploaded.population);
 			$("#card-header"+cityUploaded.id).html("<b>"+cityUploaded.name+"</b>");
 			$("#alert-message").attr("style","display: block");
-		}
-	};
-	xmlhttp.open("POST", url, true);
-	xmlhttp.setRequestHeader("Content-Type", "application/json");
-	var data = JSON.stringify(city);
-	xmlhttp.send(data);
+	    }
+	});
 }
 
 function deleteCity(idCity){
@@ -120,10 +103,7 @@ function deleteCity(idCity){
 		success : function (status){
 			$("#card-container"+idCity).remove();
 			console.log(status);
-		},
-		error: function (xhr, status, error) {  
-			console.log('Error in Operation '+ error +"/n"+"Status "+status);  
-		}  
+		}
 	});
 }
 
@@ -135,8 +115,7 @@ function formToCreate() {
 	else{
 		setVisibility(false, false,false,true);
 	}
-	clearCountriesOptionsSelect();
-	getCountriesToForm("");
+	getCountriesToForm();
 	$("#cityId").val(0);
 	$("#cityNameOfForm").val("");
 	$("#cityDistrictOfForm").val("");
