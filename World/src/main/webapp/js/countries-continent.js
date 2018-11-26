@@ -48,6 +48,8 @@ function displayCountries(countries,continent) {
 		}).text(countries[i].name);	
 		$("#continents-div").append(button);
 	}
+	$("#create-city-button").text("New");
+	$("#modificaCityButton").text("Save");
 	setVisibility(false,true,false,false);	
 }
 
@@ -78,6 +80,8 @@ function displayContinents(continents){
 		}).text(continents[i]);	
 		$("#continents-div").append(button);
 	}
+	$("#create-city-button").text("New");
+	$("#modificaCityButton").text("Save");
 	setVisibility(true,true,true,true);
 }
 

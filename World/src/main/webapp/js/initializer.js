@@ -12,15 +12,15 @@ $(document).ready(function() {
 		formToCreate();
 		$("#create-city-button").text("close");
 		$(this).click( function() {
-				if ($("#formToInsertUpdate").css('display')==='block') {
-					
-						$("#formToInsertUpdate").hide();
-						$("#create-city-button").text("New");
-				} 
-				else {
-					$("#formToInsertUpdate").show();
-					$("#create-city-button").text("close");
-				}		
+			if ($("#formToInsertUpdate").css('display')==='block') {
+
+				$("#formToInsertUpdate").hide();
+				$("#create-city-button").text("New");
+			} 
+			else {
+				$("#formToInsertUpdate").show();
+				$("#create-city-button").text("close");
+			}		
 		});
 	});
 });
