@@ -13,8 +13,8 @@ $(document).ready(function() {
 		formToCreate();
 		$("#create-city-button").css('display','none');
 		$("#close-form").css('display','block');
+		$("#modificaCityButton").css('display','block');
 		$("#formToInsertUpdate").show();
-		$("#create-city-button").on( "click",formManagementByNewCityButton);
 	});
 	$("#close-form").on("click",function(){
 		event.preventDefault();
@@ -43,4 +43,5 @@ function closeForm(){
 	$("#close-save-button").css('display','none');
 	$("#close-form").css('display','none');
 	$("#create-city-button").css('display','block');
+	$("#modificaCityButton").css('display','block');
 }
