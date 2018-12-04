@@ -7,7 +7,6 @@
 <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
 <script type="text/javascript" src="/jquery/jquery-3.3.1.min.js"></script>
 <script src="/bootstrap/js/bootstrap.min.js"></script>
-<link rel="stylesheet" type="text/css" href="/css/style.css">
 <script type="text/javascript" src="/js/countries-continent.js"></script>
 <script type="text/javascript" src="/js/city.js"></script>
 <script type="text/javascript" src="/js/layout-util.js"></script>
