@@ -14,16 +14,16 @@ public class City {
 	@Id
 	@GeneratedValue
 	private Integer id;
-	
+
 	private String name;
 	private int population;
-	
+
 	@Column(name="CountryCode")
 	private String code;
-	
+
 	private String district;
-	
-	
+
+
 	public Integer getId() {
 		return id;
 	}
