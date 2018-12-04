@@ -29,7 +29,7 @@ function displayCities(cities, continent) {
 				cities[i].population);
 		$("#card"+i).append('<div id="card-footer'+i+'" class="card-footer"></div>');
 		$("#card-footer"+i).html('<button name="modify-button" class="list-group-item "'+'onclick="formCity(' + cities[i].id +
-				')"><i>Modify</i></button></br><button name="delete"'+
+				');scrollToForm()"><i>Modify</i></button></br><button name="delete"'+
 				' class="list-group-item" onclick="deleteCity('+cities[i].id+')"><i>Delete</i></button>');
 		cityCode=cities[i].code;
 	}
@@ -42,7 +42,9 @@ function displayCities(cities, continent) {
 	}
 	else{
 		setVisibility(false, true, true);
-	}
+	}	
+	$("#close-form").css('display','none');
+	$("#create-city-button").css('display','block');
 	getCountriesToForm(cityCode);
 }
 
@@ -77,7 +79,7 @@ function saveCity() {
 	city.district =$("#cityDistrictOfForm").val();
 	city.population =$("#cityPopulationOfForm").val();
 	city.code = $("#countriesList option:selected").val();
-	console.log(city);
+	console.log("city uploaded : "+city);
 	var url = "/api/cities/insert_modify";
 	$.ajax({
 		type: 'POST',
@@ -91,7 +93,9 @@ function saveCity() {
 					cityUploaded.population);
 			$("#card-header"+cityUploaded.id).html("<b>"+cityUploaded.name+"</b>");
 			$("#alert-message").attr("style","display: block");
-	    }
+			$("#modificaCityButton").css('display','none');
+			$("#close-save-button").css('display','block');
+		}
 	});
 }
 
@@ -113,7 +117,7 @@ function formToCreate() {
 		$("#back-to-continents").attr("style","display:none");
 	}
 	else{
-		setVisibility(false, false,false,true);
+		setVisibility(false, true,false,true);
 	}
 	getCountriesToForm();
 	$("#cityId").val(0);
@@ -121,7 +125,4 @@ function formToCreate() {
 	$("#cityDistrictOfForm").val("");
 	$("#cityPopulationOfForm").val("");
 	$("#modificaCityButton").text("create");
-	$("#formToInsertUpdate").attr("style","display:block");
-	$("#modificaCityButton").attr("onclick","saveCity()");
 }
-

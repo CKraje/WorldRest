@@ -21,11 +21,11 @@
 				<nav class="navbar navbar-expand-lg navbar-light "
 					style="width: 600px;">
 					<div class="collapse navbar-collapse">
-						<button class="navbar-brand btn btn-secondary"
-							onclick="getContinents()" style="display: none"
+						<button class=" btn btn-secondary mr-1" onclick="getContinents()"
+							style="display: none; border-bottom-width: 0px;"
 							id="back-to-continents">Home</button>
-						<button class="navbar-brand btn btn-secondary"
-							onclick="getContinents()" style="display: none"
+						<button class=" btn btn-secondary mr-1" onclick="getContinents()"
+							style="display: none; border-bottom-width: 0px;"
 							id="back-to-countries">Back</button>
 						<form class="form-inline my-2 my-lg-0">
 							<div class="form-group">
@@ -38,6 +38,11 @@
 							</div>
 							<div class="form-group m-1">
 								<button id="create-city-button" class="btn btn-secondary">New</button>
+							</div>
+
+							<div class="form-group m-1">
+								<button id="close-form" class="btn btn-secondary"
+									style="display: none">Close</button>
 							</div>
 						</form>
 					</div>
@@ -81,6 +86,11 @@
 				<div class="col-md-1">
 					<button id="modificaCityButton" class="btn btn-secondary"
 						onclick="saveCity()">Save</button>
+				</div>
+
+				<div class="col-md-1">
+					<button id="close-save-button" class="btn btn-secondary"
+						onclick="closeForm()" style="display: none">Close</button>
 				</div>
 			</div>
 			<div class="row">

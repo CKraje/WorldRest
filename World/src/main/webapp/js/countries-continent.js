@@ -19,7 +19,7 @@ function getCountriesToForm(code){
 	var url = "/api/countries/";
 	$.get(url,function(countries){
 		if($("#countriesList option").length >0){
-			clearCountriesOptionsSelect();
+			$("#countriesList").empty();
 		}
 		var i;
 		for(i=0;i<countries.length;i++){
@@ -50,7 +50,9 @@ function displayCountries(countries,continent) {
 	}
 	$("#create-city-button").text("New");
 	$("#modificaCityButton").text("Save");
-	setVisibility(false,true,false,false);	
+	setVisibility(false,true,false,false);		
+	$("#close-form").css('display','none');
+	$("#create-city-button").css('display','block');
 }
 
 function getContinents() {
@@ -82,7 +84,9 @@ function displayContinents(continents){
 	}
 	$("#create-city-button").text("New");
 	$("#modificaCityButton").text("Save");
-	setVisibility(true,true,true,true);
+	setVisibility(true,true,true,true);	
+	$("#close-form").css('display','none');
+	$("#create-city-button").css('display','block');
 }
 
 function clearCountriesOptionsSelect(){
